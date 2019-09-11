@@ -1,23 +1,28 @@
 $("#searchButton").on("click", function() {
     event.preventDefault();
     var addItem = $("#searchInput").val().trim();
-    var buttonDiv = $("<button>");
-    buttonDiv.attr("id", addItem);
-    buttonDiv.text(addItem);
-    buttonDiv.addClass("buttons")
+    if (addItem != "") {
+        var buttonDiv = $("<button>");
+        buttonDiv.attr("value", addItem);
+        buttonDiv.text(addItem);
+        buttonDiv.addClass("buttons")
+        $("#button").prepend(buttonDiv);
 
-    $("#button").prepend(buttonDiv);
+
+    } else {
+        alert("add something but hitting search");
+    }
+    addItem.val("").trim();
 
 });
-$(".buttons").on("click", function() {
+$(document).on("click", ".buttons", function() {
     event.preventDefault();
-
+    //clear old gif if any
     if ($("#gifs-appear-here img").length >= 10) {
         $("#gifs-appear-here").empty();
-        console.log("worked")
     }
     //getting name from the button click
-    var person = $(this).attr("data-person");
+    var person = $(this).attr("value");
     console.log(person);
     //assigin queryURL to api and the api has a limit of 10 giphy
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -31,7 +36,7 @@ $(".buttons").on("click", function() {
         .then(function(response) {
             //get all 10 gif info.
             var results = response.data;
-            // running loop until all 10 gif
+            // running loop until all 10 gif adding rating and img to #gif-appear-here id.
             for (var i = 0; i < results.length; i++) {
                 var gifDiv = $("<div>");
 
