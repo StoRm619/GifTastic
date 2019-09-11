@@ -12,7 +12,8 @@ $("#searchButton").on("click", function() {
     } else {
         alert("add something but hitting search");
     }
-    addItem.val("").trim();
+    // clear text field after any input
+    $("#searchInput").val("");
 
 });
 $(document).on("click", ".buttons", function() {
